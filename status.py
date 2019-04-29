@@ -3,6 +3,9 @@
 import os
 import sys
 import subprocess
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 class bcolors:
     HEADER = '\033[95m'
@@ -14,18 +17,15 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
-if(len(sys.argv) > 1):
-    folder = sys.argv[1]
-else:
-    folder = "."
 
 # capture the filenames from a folder
 def ls( folder ):
     cmd = ["ls", "-l", folder]
-    # print("\n\nRunning " + "".join([n + " " for n in cmd]))
+    logging.debug("Running {}".format("".join([n + " " for n in cmd])))
     lsoutput = subprocess.check_output(cmd).decode('utf-8').split('\n')
     names = [x.split()[8] for x in lsoutput if len(x.split()) == 9]
     return names;
+
 
 # class for git status result
 class GitStatus: 
@@ -56,32 +56,46 @@ class GitStatus:
 def gs( folder ):
     result = GitStatus(folder)
     cmd = ["git","status"]
-    # print("\n\nRunning " + "".join([n + " " for n in cmd]))
+    cmdecho = "".join([n + " " for n in cmd])
+    cwd = os.getcwd()
+    logging.debug("Running {} in {}/{}".format(cmdecho, os.getcwd(), folder))
     os.chdir(folder)
     try:
         output = subprocess.check_output(cmd,stderr=subprocess.STDOUT).decode('utf-8').split('\n')
+        logging.debug(output)
         result.branch = output[0].split()[2]
         result.process(output)
     except subprocess.CalledProcessError as err:
-        # print(err.output.decode('utf-8'))
+        logging.debug(err.output.decode('utf-8'))
         result.message = err.output.decode('utf-8').split('\n')[0]
-    # print(str(result))
+    logging.debug("Results from {}\n{}".format(cmdecho,str(result)))
+    os.chdir(cwd)
     return result;
+
+
+#
+# Main program 
+#
+
+dir_path = os.path.dirname(os.path.realpath(__file__))
+logging.debug("Running script from {}".format(dir_path))
+
+if(len(sys.argv) > 1):
+    folder = sys.argv[1]
+else:
+    folder = "."
 
 folders = ls(folder)
 
-# print("\n\n")
-# print(folders)
-# print("\n\n")
-
 results = []
 for line in folders:
-    # print("Processing..."+line)
+    logging.debug("Processing...{}".format(line))
     r = gs(folder+"/"+line)
     print(r.toInfo(40,16))
     results.append(r)
 
-# print("##### RESULTS #####")
-# for r in results:
-#     print(r.toInfo(40,16))
+if(logging.getLogger().getEffectiveLevel() == logging.DEBUG):
+    print("##### RESULTS #####")
+    for r in results:
+        print(r.toInfo(40,16))
 

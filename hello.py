@@ -78,3 +78,13 @@ class bcolors:
     UNDERLINE = '\033[4m'
 
 print(bcolors.WARNING + "Warning: this is a warning. Continue?" + bcolors.ENDC)
+
+aString = "test"
+aDecimal = 50.25
+aNumber = 100
+
+# old formatting
+print("String formatting %s a string, %f a decimal, %d a number" % (aString, aDecimal, aNumber))
+# new formatting
+print("String formatting {} a string, {} a decimal, {} a number".format(aString, aDecimal, aNumber))
+
