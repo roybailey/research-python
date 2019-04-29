@@ -24,6 +24,7 @@ def ls( folder ):
     logging.debug("Running {}".format("".join([n + " " for n in cmd])))
     lsoutput = subprocess.check_output(cmd).decode('utf-8').split('\n')
     names = [x.split()[8] for x in lsoutput if len(x.split()) == 9]
+    names = [x for x in names if os.path.isdir(x)]
     return names;
 
 
