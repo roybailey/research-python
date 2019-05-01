@@ -2,7 +2,7 @@
 
 print("---- simple array/string")
 
-strings = ['a','b','c']
+strings = ['a', 'b', 'c']
 
 print(strings)
 print("".join(strings))
@@ -25,47 +25,46 @@ print(b)
 str = "Line1-abcdef \nLine2-abc \nLine4-abcd";
 print(str)
 print(str.split('\n'))
-print(str.split(' ', 1 ))
+print(str.split(' ', 1))
 
-a = [2,7,5,4]
+a = [2, 7, 5, 4]
 b = [x for x in a if x % 2 == 0]
 for x in b:
     print(x)
 
 
 # Function definition is here
-def quoteme( msg ):
-   "This prints a passed string into this function"
-   print("\""+msg+"\"")
-   return;
+def quoteme(msg):
+    "This prints a passed string into this function"
+    print("\"" + msg + "\"")
+    return;
+
 
 # Now you can call printme function
 quoteme("I'm first call to user defined function!")
 quoteme("Again second call to the same function")
 
-
-
-
-# Python program to 
+# Python program to
 # format a output using 
 # string() method 
-  
+
 cstr = "I love geeksforgeeks"
-    
+
 # Printing the center aligned   
 # string with fillchr  
-print ("Center aligned string with fillchr: ")  
-print (cstr.center(40, '#'))  
-  
+print("Center aligned string with fillchr: ")
+print(cstr.center(40, '#'))
+
 # Printing the left aligned   
 # string with "-" padding   
-print ("The left aligned string is : ")  
-print (cstr.ljust(40, '-')) 
-  
+print("The left aligned string is : ")
+print(cstr.ljust(40, '-'))
+
 # Printing the right aligned string  
 # with "-" padding   
-print ("The right aligned string is : ")  
-print (cstr.rjust(40, '-')) 
+print("The right aligned string is : ")
+print(cstr.rjust(40, '-'))
+
 
 class bcolors:
     HEADER = '\033[95m'
@@ -77,6 +76,7 @@ class bcolors:
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
 
+
 print(bcolors.WARNING + "Warning: this is a warning. Continue?" + bcolors.ENDC)
 
 aString = "test"
@@ -87,4 +87,3 @@ aNumber = 100
 print("String formatting %s a string, %f a decimal, %d a number" % (aString, aDecimal, aNumber))
 # new formatting
 print("String formatting {} a string, {} a decimal, {} a number".format(aString, aDecimal, aNumber))
-
